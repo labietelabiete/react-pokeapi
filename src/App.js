@@ -17,12 +17,14 @@ function App() {
   const [pokemonSearch, setPokemonSearch] = useState(null);
 
   useEffect(() => {
+    console.log("Entro en paginacion");
     setLoading(true);
     setPokemonSearch(null);
     pagination(currentPageUrl);
   }, [currentPageUrl]);
 
   useEffect(() => {
+    console.log("Entro en busqueda");
     setLoading(true);
     setPokemon(null);
     searchPokemon(`https://pokeapi.co/api/v2/pokemon/${query}`)

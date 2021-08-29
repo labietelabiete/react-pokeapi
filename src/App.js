@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PokemonList from './components/PokemonList/PokemonList';
 import Pagination from './components/Pagination/Pagination';
+import PokemonSearch from './components/PokemonSearch/PokemonSearch';
 import axios from 'axios';
 
 
@@ -13,12 +14,23 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [query, setQuery] = useState('');
-  const [pokemonSearch, setPokemonSearch] = useState('');
+  const [pokemonSearch, setPokemonSearch] = useState(null);
 
   useEffect(() => {
     setLoading(true);
+    setPokemonSearch(null);
+    pagination(currentPageUrl);
+  }, [currentPageUrl]);
+
+  useEffect(() => {
+    setLoading(true);
+    setPokemon(null);
+    searchPokemon(`https://pokeapi.co/api/v2/pokemon/${query}`)
+  }, [query]);
+
+  function pagination(page) {
     let cancel
-    axios.get(currentPageUrl, {
+    axios.get(page, {
       cancelToken: new axios.CancelToken(c => cancel = c)
     }).then(res => {
       setLoading(false);
@@ -28,24 +40,18 @@ function App() {
     })
 
     return () => cancel()
-  }, [currentPageUrl]);
+  }
 
-  useEffect(() => {
-    setLoading(true);
+  function searchPokemon(pokemonUrl) {
     let cancel
-    console.log(query);
-
-    axios.get(`https://pokeapi.co/api/v2/pokemon/${query}`, {
+    axios.get(pokemonUrl, {
       cancelToken: new axios.CancelToken(c => cancel = c)
     }).then(res => {
       setLoading(false);
-      // setNextPageUrl(null);
-      // setPrevPageUrl(null);
-      console.log(res.data);
       setPokemonSearch(res.data)
     })
     return () => cancel()
-  }, [query]);
+  }
 
   function goToNextPage() {
     setCurrentPageUrl(nextPageUrl)
@@ -65,21 +71,34 @@ function App() {
     setSearch('');
   }
 
+  function clearSearch() {
+    setLoading(true);
+    setPokemonSearch(null);
+    pagination(currentPageUrl);
+
+    // setCurrentPageUrl(currentPageUrl);
+  }
+
 
   if (loading) return "Loading..."
 
   return (
     <>
-      <PokemonList pokemon={pokemon} />
-      <Pagination
-        goToNextPage={nextPageUrl ? goToNextPage : null}
-        goToPrevPage={prevPageUrl ? goToPrevPage : null}
-      />
       <form onSubmit={getSearch} className="search-form">
         <input className="search-bar" type="text" value={search} onChange={updateSearch} />
         <button className="search-button" type="submit"><i className="fas fa-search"></i></button>
       </form>
-
+      <button className="clear-button" onClick={clearSearch}>Clear</button>
+      {pokemon &&
+        <>
+          <PokemonList pokemon={pokemon} />
+          <Pagination
+            goToNextPage={nextPageUrl ? goToNextPage : null}
+            goToPrevPage={prevPageUrl ? goToPrevPage : null}
+          />
+        </>
+      }
+      {pokemonSearch && <PokemonSearch pokemonSearch={pokemonSearch} />}
     </>
   );
 }

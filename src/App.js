@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import PokemonList from './components/PokemonList/PokemonList';
-import Pagination from './components/Pagination/Pagination';
-import PokemonSearch from './components/PokemonSearch/PokemonSearch';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+import Home from "./pages/Home";
 
+// import PokemonList from "./components/PokemonList/PokemonList";
+// import Pagination from "./components/Pagination/Pagination";
+// import PokemonSearch from "./components/PokemonSearch/PokemonSearch";
+import axios from "axios";
 
 function App() {
   const [pokemon, setPokemon] = useState(["bulbasaur", "charmander"]);
-  const [currentPageUrl, setCurrentPageUrl] = useState("https://pokeapi.co/api/v2/pokemon")
+  const [currentPageUrl, setCurrentPageUrl] = useState(
+    "https://pokeapi.co/api/v2/pokemon"
+  );
   const [nextPageUrl, setNextPageUrl] = useState();
   const [prevPageUrl, setPrevPageUrl] = useState();
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
-  const [query, setQuery] = useState('');
+  const [search, setSearch] = useState("");
+  const [query, setQuery] = useState("");
   const [pokemonSearch, setPokemonSearch] = useState(null);
 
   useEffect(() => {
@@ -27,80 +31,76 @@ function App() {
     console.log("Entro en busqueda");
     setLoading(true);
     setPokemon(null);
-    searchPokemon(`https://pokeapi.co/api/v2/pokemon/${query}`)
+    searchPokemon(`https://pokeapi.co/api/v2/pokemon/${query}`);
   }, [query]);
 
   function pagination(page) {
-    let cancel
-    axios.get(page, {
-      cancelToken: new axios.CancelToken(c => cancel = c)
-    }).then(res => {
-      setLoading(false);
-      setNextPageUrl(res.data.next);
-      setPrevPageUrl(res.data.previous);
-      setPokemon(res.data.results.map(p => p.name))
-    })
+    let cancel;
+    axios
+      .get(page, {
+        cancelToken: new axios.CancelToken((c) => (cancel = c)),
+      })
+      .then((res) => {
+        setLoading(false);
+        setNextPageUrl(res.data.next);
+        setPrevPageUrl(res.data.previous);
+        setPokemon(res.data.results.map((p) => p.name));
+      });
 
-    return () => cancel()
+    return () => cancel();
   }
 
   function searchPokemon(pokemonUrl) {
-    let cancel
-    axios.get(pokemonUrl, {
-      cancelToken: new axios.CancelToken(c => cancel = c)
-    }).then(res => {
-      setLoading(false);
-      setPokemonSearch(res.data)
-    })
-    return () => cancel()
+    let cancel;
+    axios
+      .get(pokemonUrl, {
+        cancelToken: new axios.CancelToken((c) => (cancel = c)),
+      })
+      .then((res) => {
+        setLoading(false);
+        setPokemonSearch(res.data);
+      });
+    return () => cancel();
   }
 
   function goToNextPage() {
-    setCurrentPageUrl(nextPageUrl)
+    setCurrentPageUrl(nextPageUrl);
   }
 
   function goToPrevPage() {
-    setCurrentPageUrl(prevPageUrl)
+    setCurrentPageUrl(prevPageUrl);
   }
 
-  const updateSearch = e => {
+  const updateSearch = (e) => {
     setSearch(e.target.value);
-  }
+  };
 
-  const getSearch = e => {
+  const getSearch = (e) => {
     e.preventDefault();
     setQuery(search);
-    setSearch('');
-  }
+    setSearch("");
+  };
 
   function clearSearch() {
     setLoading(true);
     setPokemonSearch(null);
     pagination(currentPageUrl);
-
-    // setCurrentPageUrl(currentPageUrl);
   }
 
-
-  if (loading) return "Loading..."
+  if (loading) return "Loading...";
 
   return (
     <>
-      <form onSubmit={getSearch} className="search-form">
-        <input className="search-bar" type="text" value={search} onChange={updateSearch} />
-        <button className="search-button" type="submit"><i className="fas fa-search"></i></button>
-      </form>
-      <button className="clear-button" onClick={clearSearch}>Clear</button>
-      {pokemon &&
-        <>
-          <PokemonList pokemon={pokemon} />
-          <Pagination
-            goToNextPage={nextPageUrl ? goToNextPage : null}
-            goToPrevPage={prevPageUrl ? goToPrevPage : null}
-          />
-        </>
-      }
-      {pokemonSearch && <PokemonSearch pokemonSearch={pokemonSearch} />}
+      <BrowserRouter>
+        <Switch>
+          <Route path="/pokemon">
+            <div>Pokemon</div>
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </>
   );
 }

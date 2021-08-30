@@ -1,9 +1,24 @@
 import React from "react";
 
-function Home() {
+import PokemonList from "./../../components/PokemonList/PokemonList";
+import Pagination from "./../../components/Pagination/Pagination";
+import PokemonSearch from "./../../components/PokemonSearch/PokemonSearch";
+
+function Home({
+  pokemon,
+  pokemonSearch,
+  search,
+  getSearch,
+  updateSearch,
+  clearSearch,
+  nextPageUrl,
+  goToNextPage,
+  prevPageUrl,
+  goToPrevPage,
+}) {
   return (
     <>
-      {/* <form onSubmit={getSearch} className="search-form">
+      <form onSubmit={getSearch} className="search-form">
         <input
           className="search-bar"
           type="text"
@@ -26,7 +41,7 @@ function Home() {
           />
         </>
       )}
-      {pokemonSearch && <PokemonSearch pokemonSearch={pokemonSearch} />} */}
+      {pokemonSearch && <PokemonSearch pokemonSearch={pokemonSearch} />}
       <div>Home</div>
     </>
   );

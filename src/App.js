@@ -97,7 +97,18 @@ function App() {
             <div>Pokemon</div>
           </Route>
           <Route path="/">
-            <Home />
+            <Home
+              pokemon={pokemon}
+              pokemonSearch={pokemonSearch}
+              search={search}
+              getSearch={getSearch}
+              updateSearch={updateSearch}
+              clearSearch={clearSearch}
+              nextPageUrl={nextPageUrl}
+              goToNextPage={goToNextPage}
+              prevPageUrl={prevPageUrl}
+              goToPrevPage={goToPrevPage}
+            />
           </Route>
         </Switch>
       </BrowserRouter>

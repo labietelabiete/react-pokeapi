@@ -42,7 +42,6 @@ function Home({
         </>
       )}
       {pokemonSearch && <PokemonSearch pokemonSearch={pokemonSearch} />}
-      <div>Home</div>
     </>
   );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function PokemonList({ pokemon, pokemonUrl }) {
+function PokemonList({ pokemon }) {
   return (
     <div>
       {pokemon.map((pokemonName) => (

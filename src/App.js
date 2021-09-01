@@ -8,10 +8,6 @@ import axios from "axios";
 
 function App() {
   const [pokemon, setPokemon] = useState(["bulbasaur", "charmander"]);
-  const [pokemonUrl, setPokemonUrl] = useState(
-    "https://pokeapi.co/api/v2/pokemon/1/",
-    "https://pokeapi.co/api/v2/pokemon/4/"
-  );
   const [currentPageUrl, setCurrentPageUrl] = useState(
     "https://pokeapi.co/api/v2/pokemon"
   );
@@ -47,7 +43,6 @@ function App() {
         setNextPageUrl(res.data.next);
         setPrevPageUrl(res.data.previous);
         setPokemon(res.data.results.map((p) => p));
-        setPokemonUrl(res.data.results.map((p) => p.url));
       });
 
     return () => cancel();
@@ -97,12 +92,11 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route path="/pokemon">
-            <Pokemon pokemonUrl={pokemonUrl} />
+            <Pokemon />
           </Route>
           <Route path="/">
             <Home
               pokemon={pokemon}
-              pokemonUrl={pokemonUrl}
               pokemonSearch={pokemonSearch}
               search={search}
               getSearch={getSearch}

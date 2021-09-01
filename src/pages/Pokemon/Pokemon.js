@@ -1,24 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import axios from "axios";
 
-function Pokemon({ pokemonUrl }) {
-  function pokemonInfo(url) {
+function Pokemon() {
+  const pokemonUrl = useLocation().pathname;
+
+  const [pokemonData, setPokemonData] = useState([]);
+
+  function getPokemonInfo(url) {
     let cancel;
     axios
-      .get(url, {
+      .get(`https://pokeapi.co/api/v2${url}`, {
         cancelToken: new axios.CancelToken((c) => (cancel = c)),
       })
       .then((res) => {
-        console.log(res);
+        setPokemonData(res.data);
       });
 
     return () => cancel();
   }
-  console.log(pokemonUrl);
-  pokemonInfo(pokemonUrl);
 
-  return <div>Pokemon</div>;
+  useEffect(() => {
+    getPokemonInfo(pokemonUrl);
+  });
+
+  return <div>{pokemonData.name}</div>;
 }
 
 export default Pokemon;

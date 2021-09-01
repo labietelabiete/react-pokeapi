@@ -1,12 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import PokemonCard from "../PokemonCard";
+
 function PokemonList({ pokemon }) {
   return (
     <div>
-      {pokemon.map((pokemonName) => (
-        <Link to={`/pokemon/${pokemonName.name}`}>
-          <div key={pokemonName.name}>{pokemonName.name}</div>
+      {pokemon.map((pokemonData) => (
+        <Link to={`/pokemon/${pokemonData.name}`}>
+          <PokemonCard pokemonData={pokemonData} />
         </Link>
       ))}
     </div>

@@ -1,11 +1,12 @@
-import React from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
 
 function PokemonSearch({ pokemonSearch }) {
   return (
-    <div>
-      {pokemonSearch.name}
-    </div>
-  )
+    <Link to={`/pokemon/${pokemonSearch.name}`}>
+      <div>{pokemonSearch.name}</div>
+    </Link>
+  );
 }
 
 export default PokemonSearch;

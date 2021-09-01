@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import axios from "axios";
 
@@ -25,7 +26,14 @@ function Pokemon() {
     getPokemonInfo(pokemonUrl);
   });
 
-  return <div>{pokemonData.name}</div>;
+  return (
+    <>
+      <div>{pokemonData.name}</div>
+      <Link to={`/`}>
+        <button>Back</button>
+      </Link>
+    </>
+  );
 }
 
 export default Pokemon;

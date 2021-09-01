@@ -29,7 +29,7 @@ function Pokemon() {
   return (
     <>
       <div>{pokemonData.name}</div>
-      <Link to={`/`}>
+      <Link to={"/"}>
         <button>Back</button>
       </Link>
     </>

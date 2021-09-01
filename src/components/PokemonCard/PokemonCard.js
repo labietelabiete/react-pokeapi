@@ -4,14 +4,16 @@ import axios from "axios";
 
 function PokemonCard({ pokemonData }) {
   const [pokemonCardData, setPokemonCardData] = useState([]);
+  // const [pokemonImg, setPokemonImg] = useState("");
 
-  function getPokemonInfo(url) {
+  async function getPokemonInfo(url) {
     let cancel;
     axios
       .get(url, {
         cancelToken: new axios.CancelToken((c) => (cancel = c)),
       })
       .then((res) => {
+        // console.log(res.data);
         setPokemonCardData(res.data);
       });
 
@@ -20,9 +22,19 @@ function PokemonCard({ pokemonData }) {
 
   useEffect(() => {
     getPokemonInfo(pokemonData.url);
-  });
+  }, []);
 
-  return <div>{pokemonCardData.name}</div>;
+  // const pokemonImg = pokemonCardData.sprites.other.dream_world.front_default;
+
+  return (
+    <>
+      {/* <img
+        src={pokemonCardData.sprites.other.dream_world.front_default}
+        alt={pokemonCardData.name}
+      /> */}
+      <div>{pokemonCardData.name}</div>
+    </>
+  );
 }
 
 export default PokemonCard;

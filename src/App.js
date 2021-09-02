@@ -37,6 +37,7 @@ function App() {
         cancelToken: new axios.CancelToken((c) => (cancel = c)),
       })
       .then((res) => {
+        console.log("New request");
         setLoading(false);
         setNextPageUrl(res.data.next);
         setPrevPageUrl(res.data.previous);

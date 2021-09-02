@@ -19,14 +19,12 @@ function Home() {
   const [pokemonSearch, setPokemonSearch] = useState(null);
 
   useEffect(() => {
-    console.log("Entro en useEffect de paginacion");
     setLoading(true);
     setPokemonSearch(null);
     pagination(currentPageUrl);
   }, [currentPageUrl]);
 
   useEffect(() => {
-    console.log("Entro en useEffect de busqueda");
     setLoading(true);
     setPokemon(null);
     searchPokemon(`https://pokeapi.co/api/v2/pokemon/${query}`);
@@ -35,7 +33,6 @@ function Home() {
   async function pagination(page) {
     try {
       const { data } = await axios.get(page);
-      console.log(data);
       setLoading(false);
       setNextPageUrl(data.next);
       setPrevPageUrl(data.previous);

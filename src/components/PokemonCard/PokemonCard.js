@@ -8,7 +8,6 @@ function PokemonCard({ pokemonData }) {
   async function getPokemonInfo(url) {
     try {
       const { data } = await axios.get(url);
-      console.log(data);
       setPokemonCardData(data);
     } catch (error) {
       console.log("Error on request");
@@ -21,14 +20,14 @@ function PokemonCard({ pokemonData }) {
 
   return (
     <>
-      <img
+      {/* <img
         src={pokemonCardData.sprites.other.dream_world.front_default}
         alt={pokemonCardData.name}
-      />
-      {/* <img
+      /> */}
+      <img
         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonCardData.id}.png`}
         alt={pokemonCardData.name}
-      /> */}
+      />
       <div>{pokemonCardData.name}</div>
     </>
   );

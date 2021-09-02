@@ -8,7 +8,7 @@ function PokemonList({ pokemon }) {
     <div>
       {pokemon.map((pokemonData) => (
         <Link to={`/pokemon/${pokemonData.name}`}>
-          <PokemonCard key={pokemonData.id} pokemonData={pokemonData} />
+          <PokemonCard key={pokemonData.name} pokemonData={pokemonData} />
         </Link>
       ))}
     </div>

@@ -8,7 +8,7 @@ function PokemonCard({ pokemonData }) {
 
   async function getPokemonInfo(url) {
     let cancel;
-    axios
+    await axios
       .get(url, {
         cancelToken: new axios.CancelToken((c) => (cancel = c)),
       })
@@ -22,7 +22,7 @@ function PokemonCard({ pokemonData }) {
 
   useEffect(() => {
     getPokemonInfo(pokemonData.url);
-  }, []);
+  });
 
   // const pokemonImg = pokemonCardData.sprites.other.dream_world.front_default;
 
@@ -32,6 +32,10 @@ function PokemonCard({ pokemonData }) {
         src={pokemonCardData.sprites.other.dream_world.front_default}
         alt={pokemonCardData.name}
       /> */}
+      <img
+        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonCardData.id}.png`}
+        alt={pokemonCardData.name}
+      />
       <div>{pokemonCardData.name}</div>
     </>
   );

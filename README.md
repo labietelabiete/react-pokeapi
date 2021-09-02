@@ -1,9 +1,7 @@
 # Following steps
 
-- Create a searching bar for pokemons
-- Decide how to manage the pagination:
-  - Cuando hacemos una búsqueda, se anula la paginación y se eliminan los botones de prev y next
-  - Ponemos un boton al lado de la lupa para hacer un "clear" y volver a la última página en la que estábamos
+- Crear archivos para funciones API
+- Crear archivos para constantes de rutas
 
 
 # Getting Started with Create React App

@@ -37,21 +37,12 @@ function Home() {
       const { data } = await axios.get(page);
       console.log(data);
       setLoading(false);
-      // setNextPageUrl(data.next);
-      // setPrevPageUrl(data.previous);
-      // setPokemon(data.results);
+      setNextPageUrl(data.next);
+      setPrevPageUrl(data.previous);
+      setPokemon(data.results);
     } catch (error) {
       console.log("Error on request");
     }
-    // axios
-    //   .get(page)
-    //   .then((res) => {
-    //     console.log("New request");
-    //     setLoading(false);
-    //     setNextPageUrl(res.data.next);
-    //     setPrevPageUrl(res.data.previous);
-    //     setPokemon(res.data.results.map((p) => p));
-    //   });
   }
 
   function searchPokemon(pokemonUrl) {

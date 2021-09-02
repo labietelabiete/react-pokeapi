@@ -19,6 +19,7 @@ function App() {
   const [pokemonSearch, setPokemonSearch] = useState(null);
 
   useEffect(() => {
+    console.log("Entro en useEffect")
     setLoading(true);
     setPokemonSearch(null);
     pagination(currentPageUrl);
@@ -30,21 +31,26 @@ function App() {
     searchPokemon(`https://pokeapi.co/api/v2/pokemon/${query}`);
   }, [query]);
 
-  function pagination(page) {
-    let cancel;
-    axios
-      .get(page, {
-        cancelToken: new axios.CancelToken((c) => (cancel = c)),
-      })
-      .then((res) => {
-        console.log("New request");
-        setLoading(false);
-        setNextPageUrl(res.data.next);
-        setPrevPageUrl(res.data.previous);
-        setPokemon(res.data.results.map((p) => p));
-      });
-
-    return () => cancel();
+  async function pagination(page) {
+    try {
+      const { data } = await axios.get(page);
+      console.log(data);
+      setLoading(false);
+      // setNextPageUrl(data.next);
+      // setPrevPageUrl(data.previous);
+      setPokemon(data.results);
+    } catch (error) {
+      console.log("Error on request");
+    }
+    // axios
+    //   .get(page)
+    //   .then((res) => {
+    //     console.log("New request");
+    //     setLoading(false);
+    //     setNextPageUrl(res.data.next);
+    //     setPrevPageUrl(res.data.previous);
+    //     setPokemon(res.data.results.map((p) => p));
+    //   });
   }
 
   function searchPokemon(pokemonUrl) {

@@ -5,6 +5,20 @@ import axios from "axios";
 function PokemonCard({ pokemonData }) {
   const [pokemonCardData, setPokemonCardData] = useState([]);
 
+  // async function getPokemon(pokemonUrl) {
+  //   let promise = new Promise((resolve, reject) => {
+  //     axios
+  //       .get(`https://pokeapi.co/api/v2/pokemon/${pokemonUrl}`)
+  //       .then(function ({ data }) {
+  //         resolve(data);
+  //       })
+  //       .catch(function (error) {
+  //         resolve(error);
+  //       });
+  //   });
+  //   return await promise;
+  // }
+
   async function getPokemonInfo(url) {
     try {
       const { data } = await axios.get(url);

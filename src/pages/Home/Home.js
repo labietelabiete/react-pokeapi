@@ -42,36 +42,11 @@ function Home() {
     }
   }
 
-  // async function getPersons(options) {
-  //   let promise = new Promise((resolve, reject) => {
-  //     const req = https.request(options, (res) => {
-  //       let response = "";
-
-  //       res.on("data", function onData(chunk) {
-  //         response += chunk;
-  //       });
-
-  //       res.on("end", function onEnd() {
-  //         const data = JSON.parse(response);
-  //         resolve(data);
-  //       });
-
-  //       res.on("error", function (error) {
-  //         reject(error);
-  //       });
-  //     });
-
-  //     req.end();
-  //   });
-  //   return await promise;
-  // }
-
   async function getPokemon(pokemonUrl) {
     let promise = new Promise((resolve, reject) => {
       axios
         .get(`https://pokeapi.co/api/v2/pokemon/${pokemonUrl}`)
         .then(function ({ data }) {
-          console.log(data);
           resolve(data);
         })
         .catch(function (error) {
@@ -81,24 +56,8 @@ function Home() {
     return await promise;
   }
 
-  // async function getPokemon(pokemonUrl) {
-  //   try {
-  //     console.log("Entro en getPokemon");
-  //     console.log(pokemonUrl);
-  //     const { data } = await axios.get(
-  //       `https://pokeapi.co/api/v2/pokemon/${pokemonUrl}`
-  //     );
-  //     return data;
-  //   } catch (error) {
-  //     console.log("Error on request");
-  //   }
-  // }
-
   async function searchPokemon(pokemonUrl) {
     const data = await getPokemon(pokemonUrl);
-    console.log(data);
-    console.log("Entro en searchPokemon");
-    console.log(data);
     setLoading(false);
     setPokemonSearch(data);
   }

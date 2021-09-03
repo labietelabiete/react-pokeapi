@@ -9,9 +9,24 @@ function Pokemon() {
 
   const [pokemonData, setPokemonData] = useState([]);
 
+  async function getPokemon(pokemonUrl) {
+    let promise = new Promise((resolve, reject) => {
+      axios
+        .get(`https://pokeapi.co/api/v2/pokemon/${pokemonUrl}`)
+        .then(function ({ data }) {
+          resolve(data);
+        })
+        .catch(function (error) {
+          resolve(error);
+        });
+    });
+    return await promise;
+  }
+
   async function getPokemonInfo(url) {
     try {
-      const { data } = await axios.get(`https://pokeapi.co/api/v2${url}`);
+      let pokemonUrl = url.split("/");
+      const data = await getPokemon(pokemonUrl[pokemonUrl.length - 1]);
       setPokemonData(data);
     } catch (error) {
       console.log("Error on request");
@@ -20,7 +35,7 @@ function Pokemon() {
 
   useEffect(() => {
     getPokemonInfo(pokemonUrl);
-  });
+  }, []);
 
   return (
     <>

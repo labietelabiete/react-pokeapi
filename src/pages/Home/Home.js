@@ -27,7 +27,7 @@ function Home() {
   useEffect(() => {
     setLoading(true);
     setPokemon(null);
-    searchPokemon(`https://pokeapi.co/api/v2/pokemon/${query}`);
+    searchPokemon(query);
   }, [query]);
 
   async function pagination(page) {
@@ -42,14 +42,65 @@ function Home() {
     }
   }
 
+  // async function getPersons(options) {
+  //   let promise = new Promise((resolve, reject) => {
+  //     const req = https.request(options, (res) => {
+  //       let response = "";
+
+  //       res.on("data", function onData(chunk) {
+  //         response += chunk;
+  //       });
+
+  //       res.on("end", function onEnd() {
+  //         const data = JSON.parse(response);
+  //         resolve(data);
+  //       });
+
+  //       res.on("error", function (error) {
+  //         reject(error);
+  //       });
+  //     });
+
+  //     req.end();
+  //   });
+  //   return await promise;
+  // }
+
+  async function getPokemon(pokemonUrl) {
+    let promise = new Promise((resolve, reject) => {
+      axios
+        .get(`https://pokeapi.co/api/v2/pokemon/${pokemonUrl}`)
+        .then(function ({ data }) {
+          console.log(data);
+          resolve(data);
+        })
+        .catch(function (error) {
+          resolve(error);
+        });
+    });
+    return await promise;
+  }
+
+  // async function getPokemon(pokemonUrl) {
+  //   try {
+  //     console.log("Entro en getPokemon");
+  //     console.log(pokemonUrl);
+  //     const { data } = await axios.get(
+  //       `https://pokeapi.co/api/v2/pokemon/${pokemonUrl}`
+  //     );
+  //     return data;
+  //   } catch (error) {
+  //     console.log("Error on request");
+  //   }
+  // }
+
   async function searchPokemon(pokemonUrl) {
-    try {
-      const { data } = await axios.get(pokemonUrl);
-      setLoading(false);
-      setPokemonSearch(data);
-  } catch (error) {
-      console.log("Error on request");
-    }
+    const data = await getPokemon(pokemonUrl);
+    console.log(data);
+    console.log("Entro en searchPokemon");
+    console.log(data);
+    setLoading(false);
+    setPokemonSearch(data);
   }
 
   function goToNextPage() {

@@ -1,5 +1,9 @@
 # Following steps
 
+- Revisar el temita de las Promises
+https://github.com/labietelabiete/node-moviedb-cli/blob/main/src/utils/httpsRequest.js
+https://github.com/labietelabiete/node-moviedb-cli/blob/main/src/moviedb.js
+
 - Crear archivos para funciones API
 - Crear archivos para constantes de rutas
 

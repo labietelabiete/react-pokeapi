@@ -1,35 +1,17 @@
 import React, { useState, useEffect } from "react";
 
-import axios from "axios";
+import { getPokemon } from "./../../api/";
 
 function PokemonCard({ pokemonData }) {
   const [pokemonCardData, setPokemonCardData] = useState([]);
 
-  // async function getPokemon(pokemonUrl) {
-  //   let promise = new Promise((resolve, reject) => {
-  //     axios
-  //       .get(`https://pokeapi.co/api/v2/pokemon/${pokemonUrl}`)
-  //       .then(function ({ data }) {
-  //         resolve(data);
-  //       })
-  //       .catch(function (error) {
-  //         resolve(error);
-  //       });
-  //   });
-  //   return await promise;
-  // }
-
   async function getPokemonInfo(url) {
-    try {
-      const { data } = await axios.get(url);
-      setPokemonCardData(data);
-    } catch (error) {
-      console.log("Error on request");
-    }
+    const data = await getPokemon(url);
+    setPokemonCardData(data);
   }
 
   useEffect(() => {
-    getPokemonInfo(pokemonData.url);
+    getPokemonInfo(pokemonData.name);
   }, []);
 
   return (

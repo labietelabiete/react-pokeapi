@@ -4,6 +4,8 @@ import PokemonList from "./../../components/PokemonList/PokemonList";
 import Pagination from "./../../components/Pagination/Pagination";
 import PokemonSearch from "./../../components/PokemonSearch/PokemonSearch";
 
+import { getPokemon } from "./../../api/";
+
 import axios from "axios";
 
 function Home() {
@@ -40,20 +42,6 @@ function Home() {
     } catch (error) {
       console.log("Error on request");
     }
-  }
-
-  async function getPokemon(pokemonUrl) {
-    let promise = new Promise((resolve, reject) => {
-      axios
-        .get(`https://pokeapi.co/api/v2/pokemon/${pokemonUrl}`)
-        .then(function ({ data }) {
-          resolve(data);
-        })
-        .catch(function (error) {
-          resolve(error);
-        });
-    });
-    return await promise;
   }
 
   async function searchPokemon(pokemonUrl) {

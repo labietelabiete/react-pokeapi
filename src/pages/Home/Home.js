@@ -4,9 +4,8 @@ import PokemonList from "./../../components/PokemonList/PokemonList";
 import Pagination from "./../../components/Pagination/Pagination";
 import PokemonSearch from "./../../components/PokemonSearch/PokemonSearch";
 
-import { getPokemon } from "./../../api/";
-
-import axios from "axios";
+import { getPokemon } from "./../../api/getPokemon";
+import { getPagination } from "./../../api/getPagination";
 
 function Home() {
   const [pokemon, setPokemon] = useState(["bulbasaur", "charmander"]);
@@ -34,7 +33,7 @@ function Home() {
 
   async function pagination(page) {
     try {
-      const { data } = await axios.get(page);
+      const data = await getPagination(page);
       setLoading(false);
       setNextPageUrl(data.next);
       setPrevPageUrl(data.previous);

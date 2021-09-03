@@ -42,17 +42,14 @@ function Home() {
     }
   }
 
-  function searchPokemon(pokemonUrl) {
-    let cancel;
-    axios
-      .get(pokemonUrl, {
-        cancelToken: new axios.CancelToken((c) => (cancel = c)),
-      })
-      .then((res) => {
-        setLoading(false);
-        setPokemonSearch(res.data);
-      });
-    return () => cancel();
+  async function searchPokemon(pokemonUrl) {
+    try {
+      const { data } = await axios.get(pokemonUrl);
+      setLoading(false);
+      setPokemonSearch(data);
+  } catch (error) {
+      console.log("Error on request");
+    }
   }
 
   function goToNextPage() {

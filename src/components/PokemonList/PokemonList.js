@@ -5,13 +5,13 @@ import PokemonCard from "../PokemonCard";
 
 function PokemonList({ pokemon }) {
   return (
-    <div>
+    <>
       {pokemon.map((pokemonData) => (
-        <Link to={`/pokemon/${pokemonData.name}`}>
-          <PokemonCard key={pokemonData.name} pokemonData={pokemonData} />
+        <Link key={pokemonData.name} to={`/pokemon/${pokemonData.name}`}>
+          <PokemonCard pokemonData={pokemonData} />
         </Link>
       ))}
-    </div>
+    </>
   );
 }
 

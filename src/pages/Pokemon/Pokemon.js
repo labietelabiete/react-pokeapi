@@ -9,17 +9,13 @@ function Pokemon() {
 
   const [pokemonData, setPokemonData] = useState([]);
 
-  function getPokemonInfo(url) {
-    let cancel;
-    axios
-      .get(`https://pokeapi.co/api/v2${url}`, {
-        cancelToken: new axios.CancelToken((c) => (cancel = c)),
-      })
-      .then((res) => {
-        setPokemonData(res.data);
-      });
-
-    return () => cancel();
+  async function getPokemonInfo(url) {
+    try {
+      const { data } = await axios.get(`https://pokeapi.co/api/v2${url}`);
+      setPokemonData(data);
+    } catch (error) {
+      console.log("Error on request");
+    }
   }
 
   useEffect(() => {
